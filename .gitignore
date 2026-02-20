@@ -1,0 +1,53 @@
+# ==========================================
+# 1. Entornos Virtuales y Dependencias
+# ==========================================
+venv/
+env/
+.env/
+
+# ==========================================
+# 2. Caché y Binarios de Python
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ==========================================
+# 3. Bases de Datos Locales (¡Crítico!)
+# ==========================================
+# Evitamos subir la base de datos de desarrollo
+db.sqlite3
+db.sqlite3-journal
+
+# ==========================================
+# 4. Secretos y Variables de Entorno
+# ==========================================
+# Nunca subir contraseñas, tokens JWT o configuraciones sensibles
+.env
+.env.local
+.env.dev
+.env.prod
+
+# ==========================================
+# 5. Reportes de Testing y Logs
+# ==========================================
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# ==========================================
+# 6. Archivos Estáticos y Media de Django
+# ==========================================
+# Archivos subidos por usuarios o generados por collectstatic
+/static/
+/media/
+
+# ==========================================
+# 7. Herramientas de Sistema Operativo e IDEs
+# ==========================================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
