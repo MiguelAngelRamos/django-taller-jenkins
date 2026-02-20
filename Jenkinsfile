@@ -68,7 +68,7 @@ pipeline {
                     echo "🚀 Desplegando API en PRODUCCIÓN (Puerto 8090)..."
                     sh "docker stop ${CONTAINER_PROD} || true"
                     sh "docker rm ${CONTAINER_PROD} || true"
-                    // Mapeamos el puerto 80 estándar HTTP al 8000 interno del contenedor
+                    // Mapeamos el puerto 8090 del servidor al 8000 interno del contenedor Django
                     sh "docker run -d --name ${CONTAINER_PROD} -p 8090:8000 ${IMAGE_NAME}:main"
                 }
             }
