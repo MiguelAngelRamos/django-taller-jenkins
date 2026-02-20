@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-brw7&z_m8yzb0((ay^e5+urnduc5=#8dcirnskqqs_ub=+78gn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'host.docker.internal', # Permite la comunicación desde Prometheus
+    '0.0.0.0',
+]
 
 
 # Application definition
