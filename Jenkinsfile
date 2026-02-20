@@ -65,11 +65,11 @@ pipeline {
             when { branch 'main' }
             steps {
                 script {
-                    echo "🚀 Desplegando API en PRODUCCIÓN (Puerto 80)..."
+                    echo "🚀 Desplegando API en PRODUCCIÓN (Puerto 8090)..."
                     sh "docker stop ${CONTAINER_PROD} || true"
                     sh "docker rm ${CONTAINER_PROD} || true"
                     // Mapeamos el puerto 80 estándar HTTP al 8000 interno del contenedor
-                    sh "docker run -d --name ${CONTAINER_PROD} -p 80:8000 ${IMAGE_NAME}:main"
+                    sh "docker run -d --name ${CONTAINER_PROD} -p 8090:8000 ${IMAGE_NAME}:main"
                 }
             }
         }
