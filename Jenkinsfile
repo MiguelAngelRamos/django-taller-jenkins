@@ -19,7 +19,8 @@ pipeline {
                 docker { 
                     // Usamos la misma imagen base que definimos en el Dockerfile
                     image 'python:3.11-slim' 
-                    args '--entrypoint=""' 
+                    // INYECTAMOS EL USUARIO ROOT AQUI
+                    args '-u root:root --entrypoint=""' 
                 }
             }
             steps {
