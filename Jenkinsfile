@@ -17,9 +17,8 @@ pipeline {
         stage('2. Install & Test') {
             agent {
                 docker { 
-                    // Usamos la misma imagen base que definimos en el Dockerfile
                     image 'python:3.11-slim' 
-                    // INYECTAMOS EL USUARIO ROOT AQUI
+                    // INYECTAMOS EL USUARIO ROOT AQUÍ
                     args '-u root:root --entrypoint=""' 
                 }
             }
@@ -35,7 +34,20 @@ pipeline {
             }
         }
 
-        stage('3. Build Docker Image') {
+        stage('3. SonarQube Analysis') {
+            steps {
+                script {
+                    echo "Analizando el código con SonarQube..."
+                    // El nombre 'sonarqube' debe coincidir con el nombre de tu configuración global
+                    def scannerHome = tool 'sonar-scanner' 
+                    withSonarQubeEnv('sonarqube') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+            }
+        }
+
+        stage('4. Build Docker Image') {
             when {
                 anyOf { branch 'develop'; branch 'main' }
             }
@@ -48,20 +60,20 @@ pipeline {
             }
         }
 
-        stage('4. Deploy to Staging') {
+        stage('5. Deploy to Staging') {
             when { branch 'develop' }
             steps {
                 script {
-                    echo "🚀 Desplegando API en STAGING (Puerto 8081)..."
+                    echo "🚀 Desplegando API en STAGING (Puerto 8091)..."
                     sh "docker stop ${CONTAINER_DEV} || true"
                     sh "docker rm ${CONTAINER_DEV} || true"
-                    // Mapeamos el puerto 8081 del servidor al 8000 interno del contenedor Django
-                    sh "docker run -d --name ${CONTAINER_DEV} -p 8081:8000 ${IMAGE_NAME}:develop"
+                    // Mapeamos el puerto 8091 del servidor al 8000 interno del contenedor Django
+                    sh "docker run -d --name ${CONTAINER_DEV} -p 8091:8000 ${IMAGE_NAME}:develop"
                 }
             }
         }
 
-        stage('5. Deploy to Production') {
+        stage('6. Deploy to Production') {
             when { branch 'main' }
             steps {
                 script {
